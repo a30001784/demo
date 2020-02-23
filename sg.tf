@@ -1,5 +1,5 @@
-resource "aws_security_group" "app" {
-  name = "application"
+resource "aws_security_group" "web" {
+  name = "web"
   description = "application security group"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -8,21 +8,14 @@ resource "aws_security_group" "app" {
     from_port = 80
     to_port = 80
     protocol = "tcp"
-    security_groups = ["${aws_security_group.alb.id}"]
+    security_groups = ["${aws_security_group.elb.id}"]
   }
 
     ingress {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    security_groups = ["${aws_security_group.alb.id}"]
-    }
-
-    ingress {
-    from_port = 3000
-    to_port = 3000
-    protocol = "tcp"
-    security_groups = ["${aws_security_group.alb.id}"]
+    cidr_blocks = ["0.0.0.0/0"]
     }
     
   # Allow all outbound traffic.
@@ -34,20 +27,26 @@ resource "aws_security_group" "app" {
   }
 }
 
-
-resource "aws_security_group" "mydb1" {
-  name = "mydb1"
-  description = "RDS postgres servers (terraform-managed)"
+resource "aws_security_group" "app" {
+  name = "app"
+  description = "application security group"
   vpc_id = "${aws_vpc.default.id}"
 
-  # Only postgres in
+  # Only application in
   ingress {
-    from_port = 5432
-    to_port = 5432
+    from_port = 80
+    to_port = 80
     protocol = "tcp"
-    security_groups = ["${aws_security_group.app.id}"]
+    security_groups = ["${aws_security_group.web.id}"]
   }
 
+    ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    security_groups = ["${aws_security_group.web.id}"]
+    }
+    
   # Allow all outbound traffic.
   egress {
     from_port = 0
@@ -57,9 +56,9 @@ resource "aws_security_group" "mydb1" {
   }
 }
 
-resource "aws_security_group" "alb" {
-  name = "alb"
-  description = "alb security group"
+resource "aws_security_group" "elb" {
+  name = "elb"
+  description = "elb security group"
   vpc_id = "${aws_vpc.default.id}"
   
   egress {

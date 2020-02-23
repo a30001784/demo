@@ -4,7 +4,7 @@ resource "aws_vpc" "default" {
   enable_dns_support = true
   instance_tenancy     = "default"
   tags = { 
-    Name = "servian" 
+    Name = "vpc-techtest" 
     }
 }
 

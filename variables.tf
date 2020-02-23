@@ -1,6 +1,6 @@
 variable "user_name" { default = "ubuntu" }
 variable "ssh_key_path" { 
-  default = "../../postgre.pem" 
+  default = "../postgre.pem" 
   }
 
 variable "ssh_key_name" { 
@@ -8,23 +8,23 @@ variable "ssh_key_name" {
   }
   
 variable "cidr" { 
-  default  ="10.2.2.0/23"
+  default  ="10.2.0.0/16"
 }
 
 variable "source_cidr_block" { 
-  default  = "10.2.2.0/25"
+  default  = "10.2.2.0/24"
 }
 
 variable "source_cidr_block1" { 
-  default  = "10.2.3.0/25"
+  default  = "10.2.3.0/24"
 }
 
 variable "private_cidr_block" {
-  default = "10.2.2.128/25"
+  default = "10.2.4.0/24"
 }
 
 variable "private_cidr_block1" {
-  default = "10.2.3.128/25"
+  default = "10.2.5.0/24"
 }
 
 variable "region" { 
@@ -35,26 +35,35 @@ variable "region" {
    default     = "postgre.pem"
  }
 
-  variable "asg_max" {
-   default     = "4"
- }
+#   variable "asg_max" {
+#    default     = "1"
+#  }
 
-   variable "asg_min" {
+#    variable "asg_min" {
+#    default     = "1"
+#  }
+
+#    variable "asg_desired" {
+#    default     = "1"
+#  }
+
+   variable "asg_web_max" {
    default     = "2"
  }
 
-   variable "asg_desired" {
-   default     = "4"
+   variable "asg_web_min" {
+   default     = "2"
+ }
+
+   variable "asg_web_desired" {
+   default     = "2"
  }
 
   variable "access_key" {
-   
+   default = "AKIAJKFENDIH6WZI6UJA"
  }
 
   variable "secret_access_key" {
-   
+   default = "4myJ7CqbW9BkGUxQsLbCDkDaJWDGtAtsyqoePFVu"
  }
 
-variable "db_password" {
-  default = "changeme"
-}
