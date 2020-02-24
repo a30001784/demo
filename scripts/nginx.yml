@@ -1,6 +1,5 @@
 ---
 - hosts: 127.0.0.1
-  connection: local
   tasks:
     - name: ensure nginx is at the latest version
       apt: name=nginx state=latest
